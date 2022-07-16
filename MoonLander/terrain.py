@@ -1,5 +1,5 @@
 # Generate Terrain
-class Terrain:
+class Terrain():
     '''
     Generates a number of points
     Sets a platform for landing
@@ -9,3 +9,7 @@ class Terrain:
     
     def get_platform_position(self):
         pass
+
+    def get_terrain_height_at(x):
+        pass
+

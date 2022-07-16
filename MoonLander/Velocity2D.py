@@ -2,20 +2,22 @@ class Velocity2D:
     '''
 
     '''
-    def __init__(self, x = 0, y = 0) -> None:
-        self.x = x
-        self.y = y
+    def __init__(self, dx = 0, dy = 0) -> None:
+        self.dx = dx
+        self.dy = dy
 
-    def add_update(self, otherPoint):
-        if type(otherPoint) == Velocity2D:
-            self.x += otherPoint.x
-            self.y += otherPoint.y
+    def add_update(self, otherVel):
+        if type(otherVel) == Velocity2D:
+            self.dx += otherVel.dx
+            self.dy += otherVel.dy
         else:
             raise Exception
 
-    def add_calc(self, otherPoint):
-        return Velocity2D(self.x + otherPoint.x, self.y + otherPoint.y)
-        
-v = Velocity2D()
-v2 = Velocity2D()
-v.add_update(v2)
+    def add_calc(self, otherVel):
+        return Velocity2D(self.dx + otherVel.dx, self.dy + otherVel.dy)
+
+# for testing purposes only
+if __name__ == "__main__":        
+    v = Velocity2D()
+    v2 = Velocity2D()
+    v.add_update(v2)

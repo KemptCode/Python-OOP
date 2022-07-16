@@ -1,5 +1,6 @@
 import pygame
 import time
+from collections import defaultdict
 
 from terrain import Terrain
 from lander import Lander
@@ -8,10 +9,18 @@ from Point2D import Point2D
 CANVAS_WIDTH = 600
 CANVAS_HEIGHT = 400
 
+GRAVITY_CONST = 0.1
+
+UP_BUTTON = pygame.K_UP
+DOWN_BUTTON = pygame.K_DOWN
+LEFT_BUTTON = pygame.K_LEFT
+RIGHT_BUTTON = pygame.K_RIGHT
+
 class Game:
     def __init__(self) -> None:
     # Game elements setup
         # BackGround
+        self.keys_pressed = defaultdict(bool)
 
         # Terrain
         self.terrain = Terrain()
@@ -35,26 +44,36 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
 
-                if event.type == pygame.K_UP:
-                    pass
+                if event.type == pygame.KEYDOWN:
+                    self.keys_pressed[event.key] = True
+                    print(self.keys_pressed)
+                    
+                elif event.type == pygame.KEYUP:
+                    del self.keys_pressed[event.key]
+                    print(self.keys_pressed)
 
-                if event.type == pygame.K_DOWN:
-                    pass
-
-                if event.type == pygame.K_LEFT:
-                    pass
-
-                if event.type == pygame.K_RIGHT:
-                    pass
             
             # Calc time delta since last frame
 
-            # Render Frame
-                # Background
-                # Terrain
-                # Lander
 
             # Update Physics
+            self.lander.apply_gravity()
+
+            # Thrusters
+            for key in self.keys_pressed:
+                # Lander
+                if self.keys_pressed[key] == True:
+                    if key == DOWN_BUTTON:
+                        pass
+                    elif key == LEFT_BUTTON:
+                        pass
+                    elif key == RIGHT_BUTTON:
+                        pass
+                    
+            # Render Frame
+                # Background
+                    #Stars
+                # Terrain
                 # Lander
 
             # Timing
