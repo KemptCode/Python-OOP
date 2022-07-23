@@ -12,7 +12,7 @@ class Point2D:
         self.x = x
         self.y = y
 
-    def add_update(self, otherPoint):
+    def add_update(self, otherPoint : "Point2D" | Velocity2D) -> None:
         if type(otherPoint) == Point2D:
             self.x += otherPoint.x
             self.y += otherPoint.y
@@ -22,7 +22,7 @@ class Point2D:
         else:
             raise Exception
 
-    def add_calc(self, otherPoint):
+    def add_calc(self, otherPoint : "Point2D") -> "Point2D":
         return Point2D(self.x + otherPoint.x, self.y + otherPoint.y)
 
 

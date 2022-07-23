@@ -9,6 +9,8 @@ from Point2D import Point2D
 CANVAS_WIDTH = 600
 CANVAS_HEIGHT = 400
 
+TIME_BETWEEN_FRAMES = 0.04
+
 GRAVITY_CONST = 0.1
 
 UP_BUTTON = pygame.K_UP
@@ -52,9 +54,14 @@ class Game:
                     del self.keys_pressed[event.key]
                     print(self.keys_pressed)
 
-            
             # Calc time delta since last frame
 
+            # WIN / LOSE ? Conditions
+            if self.lander.has_crashed():
+                # Display Game Over Screen
+
+                time.sleep(TIME_BETWEEN_FRAMES)
+                continue
 
             # Update Physics
             self.lander.apply_gravity()
@@ -77,7 +84,7 @@ class Game:
                 # Lander
 
             # Timing
-            time.sleep(.04)
+            time.sleep(TIME_BETWEEN_FRAMES)
 
 if __name__ == "__main__":
     game = Game()
