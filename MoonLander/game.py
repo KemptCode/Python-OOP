@@ -30,7 +30,7 @@ class Game:
         # Lander
         self.lander = Lander(Point2D) # add starting position
 
-    def run(self):
+    def run(self) -> None:
         pygame.init()
         # Game window setup
         screen = pygame.display.set_mode([CANVAS_WIDTH, CANVAS_HEIGHT])

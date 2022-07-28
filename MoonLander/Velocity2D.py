@@ -6,14 +6,14 @@ class Velocity2D:
         self.dx = dx
         self.dy = dy
 
-    def add_update(self, otherVel):
+    def add_update(self, otherVel : "Velocity2D") -> None:
         if type(otherVel) == Velocity2D:
             self.dx += otherVel.dx
             self.dy += otherVel.dy
         else:
             raise Exception
 
-    def add_calc(self, otherVel):
+    def add_calc(self, otherVel : "Velocity2D") -> "Velocity2D":
         return Velocity2D(self.dx + otherVel.dx, self.dy + otherVel.dy)
 
 # for testing purposes only
