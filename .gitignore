@@ -1,0 +1,5 @@
+# Python Compilation
+__pycache__/
+
+# VSCode related things
+.vscode/
