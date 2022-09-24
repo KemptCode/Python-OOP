@@ -1,3 +1,5 @@
+from typing import Union
+
 from Velocity2D import Velocity2D
 
 class Point2D:
@@ -12,7 +14,7 @@ class Point2D:
         self.x = x
         self.y = y
 
-    def add_update(self, otherPoint : "Point2D" | Velocity2D) -> None:
+    def add_update(self, otherPoint : Union["Point2D", Velocity2D]) -> None:
         if type(otherPoint) == Point2D:
             self.x += otherPoint.x
             self.y += otherPoint.y

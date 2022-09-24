@@ -64,7 +64,7 @@ class Game:
                 continue
 
             # Update Physics
-            self.lander.apply_gravity()
+            self.lander.apply_gravity(GRAVITY_CONST)
 
             # Thrusters
             for key in self.keys_pressed:
