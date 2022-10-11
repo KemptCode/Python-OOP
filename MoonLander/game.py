@@ -31,9 +31,7 @@ class Game:
         self.lander = Lander(Point2D) # add starting position
 
     def run(self) -> None:
-        pygame.init()
-        # Game window setup
-        screen = pygame.display.set_mode([CANVAS_WIDTH, CANVAS_HEIGHT])
+        self.game_screen = RenderEngine()
 
         #Game loop
         running = True
@@ -85,6 +83,13 @@ class Game:
 
             # Timing
             time.sleep(TIME_BETWEEN_FRAMES)
+
+class RenderEngine:
+    def __init__(self) -> None:
+        pygame.init()
+        # Game window setup
+        self.screen = pygame.display.set_mode([CANVAS_WIDTH, CANVAS_HEIGHT])
+
 
 if __name__ == "__main__":
     game = Game()
