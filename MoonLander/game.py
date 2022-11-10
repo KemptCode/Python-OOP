@@ -1,5 +1,6 @@
-import pygame
+import os
 import time
+import pygame
 from collections import defaultdict
 
 from terrain import Terrain
@@ -28,7 +29,7 @@ class Game:
         self.terrain = Terrain()
 
         # Lander
-        self.lander = Lander(Point2D) # add starting position
+        self.lander = Lander(Point2D(0,0)) # add starting position
 
     def run(self) -> None:
         self.game_screen = RenderEngine()
@@ -57,6 +58,7 @@ class Game:
             # WIN / LOSE ? Conditions
             if self.lander.has_crashed():
                 # Display Game Over Screen
+                # TODO: ADD GAME OVER text
 
                 time.sleep(TIME_BETWEEN_FRAMES)
                 continue
@@ -80,6 +82,7 @@ class Game:
                     #Stars
                 # Terrain
                 # Lander
+            self.game_screen.display_lander(self.lander.position)
 
             # Timing
             time.sleep(TIME_BETWEEN_FRAMES)
@@ -88,7 +91,14 @@ class RenderEngine:
     def __init__(self) -> None:
         pygame.init()
         # Game window setup
-        self.screen = pygame.display.set_mode([CANVAS_WIDTH, CANVAS_HEIGHT])
+        self.__display = pygame.display.set_mode([CANVAS_WIDTH, CANVAS_HEIGHT])
+
+        # Load images
+        self.__lander_img = pygame.image.load(os.path.join("Assets", "Lander.png")).convert()
+    
+    def display_lander(self, position : Point2D) -> None:
+        self.__display.blit(self.__lander_img, (position.x, position.y))
+
 
 
 if __name__ == "__main__":
