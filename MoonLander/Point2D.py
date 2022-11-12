@@ -19,8 +19,8 @@ class Point2D:
             self.x += otherPoint.x
             self.y += otherPoint.y
         elif type(otherPoint) == Velocity2D:
-            self.x += otherPoint.x
-            self.y += otherPoint.y
+            self.x += otherPoint.dx
+            self.y += otherPoint.dy
         else:
             raise Exception
 

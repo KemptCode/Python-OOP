@@ -3,7 +3,7 @@ import time
 import pygame
 from collections import defaultdict
 
-from terrain import Terrain
+# from terrain import Terrain
 from lander import Lander
 from Point2D import Point2D
 
@@ -12,7 +12,7 @@ CANVAS_HEIGHT = 400
 
 TIME_BETWEEN_FRAMES = 0.04
 
-GRAVITY_CONST = 0.1
+GRAVITY_CONST = -0.01
 
 UP_BUTTON = pygame.K_UP
 DOWN_BUTTON = pygame.K_DOWN
@@ -26,7 +26,7 @@ class Game:
         self.keys_pressed = defaultdict(bool)
 
         # Terrain
-        self.terrain = Terrain()
+        # self.terrain = Terrain()
 
         # Lander
         self.lander = Lander(Point2D(0,0)) # add starting position
@@ -37,7 +37,6 @@ class Game:
         #Game loop
         running = True
         while running:
-
             # Handle Events
             for event in pygame.event.get():
 
@@ -65,20 +64,22 @@ class Game:
 
             # Update Physics
             self.lander.apply_gravity(GRAVITY_CONST)
+            self.lander.apply_physics()
 
             # Thrusters
             for key in self.keys_pressed:
                 # Lander
                 if self.keys_pressed[key] == True:
                     if key == DOWN_BUTTON:
-                        pass
+                        self.lander.thrust_down()
                     elif key == LEFT_BUTTON:
-                        pass
+                        self.lander.thrust_left()
                     elif key == RIGHT_BUTTON:
-                        pass
+                        self.lander.thrust_right()
                     
             # Render Frame
                 # Background
+            self.game_screen.display_background()
                     #Stars
                 # Terrain
                 # Lander
@@ -86,6 +87,7 @@ class Game:
 
             # Timing
             time.sleep(TIME_BETWEEN_FRAMES)
+            pygame.display.flip()
 
 class RenderEngine:
     def __init__(self) -> None:
@@ -96,6 +98,9 @@ class RenderEngine:
         # Load images
         self.__lander_img = pygame.image.load(os.path.join("Assets", "Lander.png")).convert()
     
+    def display_background(self):
+        pygame.draw.rect(self.__display, (0, 0, 0), [0,0, CANVAS_WIDTH, CANVAS_HEIGHT])
+
     def display_lander(self, position : Point2D) -> None:
         self.__display.blit(self.__lander_img, (position.x, position.y))
 

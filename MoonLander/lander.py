@@ -13,7 +13,7 @@ class Lander:
         self.crashed = False
 
     def thrust_down(self, time = 1) -> None:
-        self.velocity.add_update(Velocity2D(0, THRUST_POWER * time))
+        self.velocity.add_update(Velocity2D(0, -THRUST_POWER * time))
 
     def thrust_left(self, time = 1) -> None:
         self.velocity.add_update(Velocity2D(THRUST_POWER * time, 0))
@@ -32,3 +32,6 @@ class Lander:
     
     def has_fuel(self) -> bool:
         return self.fuel > 0
+
+    def apply_physics(self) -> None:
+        self.position.add_update(self.velocity)
