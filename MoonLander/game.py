@@ -1,5 +1,6 @@
 import os
 import time
+from typing import Tuple
 import pygame
 from collections import defaultdict
 
@@ -13,6 +14,7 @@ CANVAS_HEIGHT = 400
 TIME_BETWEEN_FRAMES = 0.04
 
 GRAVITY_CONST = -0.01
+OUTER_BORDER_WIDTH = 30
 
 UP_BUTTON = pygame.K_UP
 DOWN_BUTTON = pygame.K_DOWN
@@ -55,11 +57,15 @@ class Game:
             # Calc time delta since last frame
 
             # WIN / LOSE ? Conditions
-            if self.lander.has_crashed():
+            # TODO: Add out of bounds
+            if self.lander.has_crashed() or self.lander_out_of_bounds():
                 # Display Game Over Screen
                 # TODO: ADD GAME OVER text
 
-                time.sleep(TIME_BETWEEN_FRAMES)
+                self.game_screen.display_game_over()
+                pygame.display.flip()
+
+                time.sleep(TIME_BETWEEN_FRAMES * 100)
                 continue
 
             # Update Physics
@@ -85,9 +91,13 @@ class Game:
                 # Lander
             self.game_screen.display_lander(self.lander.position)
 
+            pygame.display.flip()
             # Timing
             time.sleep(TIME_BETWEEN_FRAMES)
-            pygame.display.flip()
+
+    def lander_out_of_bounds(self):
+        x, y = self.lander.position.x, self.lander.position.y
+        return not ((0 - OUTER_BORDER_WIDTH) < x < (CANVAS_WIDTH + OUTER_BORDER_WIDTH) and (0 - OUTER_BORDER_WIDTH) < y < (CANVAS_HEIGHT + OUTER_BORDER_WIDTH))
 
 class RenderEngine:
     def __init__(self) -> None:
@@ -98,11 +108,25 @@ class RenderEngine:
         # Load images
         self.__lander_img = pygame.image.load(os.path.join("Assets", "Lander.png")).convert()
     
-    def display_background(self):
-        pygame.draw.rect(self.__display, (0, 0, 0), [0,0, CANVAS_WIDTH, CANVAS_HEIGHT])
+    def display_background(self, bg_color: Tuple[int] = (0, 0, 0)):
+        pygame.draw.rect(self.__display, bg_color, [0,0, CANVAS_WIDTH, CANVAS_HEIGHT])
 
     def display_lander(self, position : Point2D) -> None:
         self.__display.blit(self.__lander_img, (position.x, position.y))
+    
+    def display_fuel(self, fuel_level):
+        # Font
+        font = pygame.font.SysFont("Ariel", 24)
+        # text surface
+        text_surface = font.render("Game Over", False, (0,200,0))
+        self.__display.blit(text_surface, (0, 0))
+    
+    def display_game_over(self):
+        # Font
+        font = pygame.font.SysFont("Ariel", 35)
+        # text surface
+        text_surface = font.render("Game Over", False, (0,200,0))
+        self.__display.blit(text_surface, (CANVAS_WIDTH//2, CANVAS_HEIGHT//2))
 
 
 
