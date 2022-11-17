@@ -4,7 +4,7 @@ from typing import Tuple
 import pygame
 from collections import defaultdict
 
-# from terrain import Terrain
+from terrain import Terrain
 from lander import Lander
 from Point2D import Point2D
 
@@ -28,7 +28,7 @@ class Game:
         self.keys_pressed = defaultdict(bool)
 
         # Terrain
-        # self.terrain = Terrain()
+        self.terrain = Terrain(CANVAS_WIDTH, CANVAS_HEIGHT)
 
         # Lander
         self.lander = Lander(Point2D(0,0)) # add starting position
@@ -84,11 +84,12 @@ class Game:
                         self.lander.thrust_right()
                     
             # Render Frame
-                # Background
+            #   Background
             self.game_screen.display_background()
-                    #Stars
-                # Terrain
-                # Lander
+            #   Stars
+            #   Terrain
+            self.game_screen.display_lines_between_points(self.terrain.points)
+            #   Lander
             self.game_screen.display_lander(self.lander.position)
 
             pygame.display.flip()
@@ -118,7 +119,7 @@ class RenderEngine:
         # Font
         font = pygame.font.SysFont("Ariel", 24)
         # text surface
-        text_surface = font.render("Game Over", False, (0,200,0))
+        text_surface = font.render("Game Over", False, (0, 200, 0))
         self.__display.blit(text_surface, (0, 0))
     
     def display_game_over(self):
@@ -128,6 +129,10 @@ class RenderEngine:
         text_surface = font.render("Game Over", False, (0,200,0))
         self.__display.blit(text_surface, (CANVAS_WIDTH//2, CANVAS_HEIGHT//2))
 
+    def display_lines_between_points(self, points: Tuple[Point2D]):
+        # Draw lines between pair
+        for index in range(len(points) - 1):
+            pygame.draw.line(self.__display, (255, 255, 255), points[index].to_tuple(), points[index+1].to_tuple(), width=1)
 
 
 if __name__ == "__main__":

@@ -26,6 +26,9 @@ class Point2D:
 
     def add_calc(self, otherPoint : "Point2D") -> "Point2D":
         return Point2D(self.x + otherPoint.x, self.y + otherPoint.y)
+    
+    def to_tuple(self):
+        return (self.x, self.y)
 
 
 # for testing purposes only
