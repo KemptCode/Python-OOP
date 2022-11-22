@@ -31,7 +31,7 @@ class Game:
         self.terrain = Terrain(CANVAS_WIDTH, CANVAS_HEIGHT)
 
         # Lander
-        self.lander = Lander(Point2D(0,0)) # add starting position
+        self.lander = Lander(Point2D(CANVAS_WIDTH//2,0)) # add starting position
 
     def run(self) -> None:
         self.game_screen = RenderEngine()
@@ -86,6 +86,7 @@ class Game:
             # Render Frame
             #   Background
             self.game_screen.display_background()
+            self.game_screen.display_fuel(self.lander.fuel)
             #   Stars
             #   Terrain
             self.game_screen.display_lines_between_points(self.terrain.points)
@@ -119,7 +120,7 @@ class RenderEngine:
         # Font
         font = pygame.font.SysFont("Ariel", 24)
         # text surface
-        text_surface = font.render("Game Over", False, (0, 200, 0))
+        text_surface = font.render(str(fuel_level), False, (0, 200, 0))
         self.__display.blit(text_surface, (0, 0))
     
     def display_game_over(self):

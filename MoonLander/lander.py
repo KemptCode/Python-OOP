@@ -2,7 +2,7 @@ from Point2D import Point2D
 from Velocity2D import Velocity2D
 
 THRUST_POWER = 0.3
-TOTAL_FUEL = 1000
+TOTAL_FUEL = 100
 FUEL_COST = 1
 
 class Lander:
@@ -11,7 +11,7 @@ class Lander:
                 , velocity : Velocity2D = Velocity2D()) -> None:
         self.position = position
         self.velocity = velocity
-        self.fuel = 1000
+        self.fuel = TOTAL_FUEL
         self.crashed = False
 
     def thrust_down(self, time = 1) -> None:

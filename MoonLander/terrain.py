@@ -10,6 +10,7 @@ class Terrain():
     def __init__(self, width, height, num_points : int = 20) -> None:
         self.__generate_terrain( width, height, num_points)
         self.width = width
+        self.height = height
         self.num_points = num_points
 
     def __generate_terrain(self, width, height, num_points : int) -> None:
@@ -17,13 +18,14 @@ class Terrain():
         for i in range(num_points):
             self.points.append(Point2D(i * width//num_points, random.randint(height//2, height)))
         self.platform_pos = Point2D()
+        
     
     def get_platform_position(self) -> Point2D:
         return self.platform_pos
 
     def get_terrain_height_at(self, x : int) -> int:
         if x < 0 or self.width < x:
-            return 0
+            return self.height
 
         i = x // (self.width / self.num_points)
         p1, p2 = self.points[i], self.points[i+1]
