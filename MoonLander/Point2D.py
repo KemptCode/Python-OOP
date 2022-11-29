@@ -10,11 +10,11 @@ class Point2D:
     add_calc    adds another Point2D 
                 and returns value without updating state
     '''
-    def __init__(self, x = 0, y = 0) -> None:
+    def __init__(self, x: int = 0, y: int = 0) -> None:
         self.x = x
         self.y = y
 
-    def add_update(self, otherPoint : Union["Point2D", Velocity2D]) -> None:
+    def add_update(self, otherPoint: Union["Point2D", Velocity2D]) -> None:
         if type(otherPoint) == Point2D:
             self.x += otherPoint.x
             self.y += otherPoint.y
@@ -24,7 +24,7 @@ class Point2D:
         else:
             raise Exception
 
-    def add_calc(self, otherPoint : "Point2D") -> "Point2D":
+    def add_calc(self, otherPoint: "Point2D") -> "Point2D":
         return Point2D(self.x + otherPoint.x, self.y + otherPoint.y)
     
     def to_tuple(self):
