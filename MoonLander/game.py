@@ -114,8 +114,7 @@ class RenderEngine:
             os.path.join("Assets", "Lander.png")).convert()
 
     def display_background(self, bg_color: Tuple[int] = (0, 0, 0)):
-        pygame.draw.rect(self.__display, bg_color, [
-                         0, 0, CANVAS_WIDTH, CANVAS_HEIGHT])
+        self.__display.fill('black')
         # Stars
 
     def display_lander(self, position: Point2D) -> None:
