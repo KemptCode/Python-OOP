@@ -39,14 +39,16 @@ class Game:
         self.game_screen = RenderEngine()
 
         # Game loop
-        running = True
-        while running:
+        paused = False
+
+        while True:
             # Handle Events
+            
             for event in pygame.event.get():
 
                 # EXIT
                 if event.type == pygame.QUIT:
-                    running = False
+                    return
 
                 if event.type == pygame.KEYDOWN:
                     self.keys_pressed[event.key] = True
@@ -59,16 +61,19 @@ class Game:
             # Calc time delta since last frame
 
             # WIN / LOSE ? Conditions
-            # TODO: Add out of bounds
             if self.lander.has_crashed() or self.lander_out_of_bounds():
                 # Display Game Over Screen
-                # TODO: ADD GAME OVER text
-
+                
                 self.game_screen.display_game_over()
                 pygame.display.flip()
 
-                time.sleep(TIME_BETWEEN_FRAMES * 100)
-                continue
+                # Wait for user input
+                while True:
+                    for event in pygame.event.get():
+                        # EXIT
+                        if event.type == pygame.QUIT:
+                            return
+                    time.sleep(TIME_BETWEEN_FRAMES)
 
             # Update Physics
             self.lander.apply_gravity(GRAVITY_CONST)
@@ -114,7 +119,7 @@ class RenderEngine:
             os.path.join("Assets", "Lander.png")).convert()
 
     def display_background(self, bg_color: Tuple[int] = (0, 0, 0)):
-        self.__display.fill('black')
+        self.__display.fill(bg_color)
         # Stars
 
     def display_lander(self, position: Point2D) -> None:
