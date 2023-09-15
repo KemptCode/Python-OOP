@@ -78,6 +78,8 @@ class Game:
             # Update Physics
             self.lander.apply_gravity(GRAVITY_CONST)
             self.lander.apply_physics()
+            if self.lander.position.y > self.terrain.get_terrain_height_at(self.lander.position.x):
+                self.lander.crashed = True
 
             # Thrusters
             for key in self.keys_pressed:
@@ -98,6 +100,8 @@ class Game:
             self.game_screen.display_lines_between_points(self.terrain.points)
             #   Lander
             self.game_screen.display_lander(self.lander.position)
+            #   Platform
+            self.game_screen.display_platform(self.terrain.get_platform_position())
 
             pygame.display.flip()
             # Timing
@@ -117,6 +121,9 @@ class RenderEngine:
         # Load images
         self.__lander_img = pygame.image.load(
             os.path.join("Assets", "Lander.png")).convert()
+        
+        self.__platform_img = pygame.image.load(
+            os.path.join("Assets", "Platform.png")).convert()
 
     def display_background(self, bg_color: Tuple[int] = (0, 0, 0)):
         self.__display.fill(bg_color)
@@ -124,6 +131,9 @@ class RenderEngine:
 
     def display_lander(self, position: Point2D) -> None:
         self.__display.blit(self.__lander_img, (position.x, position.y))
+
+    def display_platform(self, position: Point2D) -> None:
+        self.__display.blit(self.__platform_img, (position.x, position.y))
 
     def display_fuel(self, fuel_level: int):
         # Font

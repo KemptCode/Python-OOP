@@ -9,6 +9,10 @@ class Point2D:
                 and updates state of self
     add_calc    adds another Point2D 
                 and returns value without updating state
+    
+    Attributes:
+        x: int for x-axis
+        y: int for y-axis
     '''
     def __init__(self, x: int = 0, y: int = 0) -> None:
         self.x = x
@@ -29,6 +33,9 @@ class Point2D:
     
     def to_tuple(self):
         return (self.x, self.y)
+    
+    def __repr__(self) -> str:
+        return f"Point2D(x={self.x}, y={self.y})"
 
 
 # for testing purposes only
