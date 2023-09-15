@@ -59,11 +59,26 @@ class Game:
 
             # Calc time delta since last frame
 
-            # WIN / LOSE ? Conditions
+            # LOSE Condition
             if self.lander.has_crashed() or self.lander_out_of_bounds():
                 # Display Game Over Screen
                 
                 self.game_screen.display_game_over()
+                pygame.display.flip()
+
+                # Wait for user input
+                while True:
+                    for event in pygame.event.get():
+                        # EXIT
+                        if event.type == pygame.QUIT:
+                            return
+                    time.sleep(TIME_BETWEEN_FRAMES)
+
+            # WIN Condition
+            if 1024 > ((self.lander.position.x - self.terrain.get_platform_position().x)**2 + (self.lander.position.y - self.terrain.get_platform_position().y)**2):
+                # Display Game Over Screen
+                
+                self.game_screen.display_game_win()
                 pygame.display.flip()
 
                 # Wait for user input
@@ -153,6 +168,13 @@ class RenderEngine:
         font = pygame.font.SysFont("Ariel", 35)
         # text surface
         text_surface = font.render("Game Over", False, (0, 200, 0))
+        self.__display.blit(text_surface, (CANVAS_WIDTH//2, CANVAS_HEIGHT//2))
+
+    def display_game_win(self):
+        # Font
+        font = pygame.font.SysFont("Ariel", 35)
+        # text surface
+        text_surface = font.render("You won!", False, (0, 200, 0))
         self.__display.blit(text_surface, (CANVAS_WIDTH//2, CANVAS_HEIGHT//2))
 
     def display_lines_between_points(self, points: Tuple[Point2D]):
