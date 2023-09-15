@@ -36,7 +36,7 @@ class Lander:
 
     def display_lander(self, callback_display_function: Callable) -> None:
         # Display from the center of the sprite
-        callback_display_function((self.position.x - CHARACTER_OFFSET, self.position.y - CHARACTER_OFFSET))
+        callback_display_function(Point2D(self.position.x - CHARACTER_OFFSET, self.position.y - CHARACTER_OFFSET))
 
     def apply_gravity(self, gravity_power, time = 1) -> None:
         self.velocity.add_update(Velocity2D(0, -gravity_power * time))

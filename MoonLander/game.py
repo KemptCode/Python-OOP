@@ -45,7 +45,6 @@ class Game:
             # Handle Events
             
             for event in pygame.event.get():
-
                 # EXIT
                 if event.type == pygame.QUIT:
                     return
@@ -99,7 +98,8 @@ class Game:
             #   Terrain
             self.game_screen.display_lines_between_points(self.terrain.points)
             #   Lander
-            self.game_screen.display_lander(self.lander.position)
+            self.lander.display_lander(self.game_screen.display_lander)
+            self.game_screen.display_marker(self.lander.position)
             #   Platform
             self.game_screen.display_platform(self.terrain.get_platform_position())
 
@@ -124,6 +124,9 @@ class RenderEngine:
         
         self.__platform_img = pygame.image.load(
             os.path.join("Assets", "Platform.png")).convert()
+        
+        self.__marker = pygame.image.load(
+            os.path.join("Assets", "marker.png")).convert()
 
     def display_background(self, bg_color: Tuple[int] = (0, 0, 0)):
         self.__display.fill(bg_color)
@@ -131,6 +134,9 @@ class RenderEngine:
 
     def display_lander(self, position: Point2D) -> None:
         self.__display.blit(self.__lander_img, (position.x, position.y))
+        
+    def display_marker(self, position: Point2D) -> None:
+        self.__display.blit(self.__marker, (position.x, position.y))
 
     def display_platform(self, position: Point2D) -> None:
         self.__display.blit(self.__platform_img, (position.x, position.y))
